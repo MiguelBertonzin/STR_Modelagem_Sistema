@@ -1,0 +1,99 @@
+Os trechos a seguir transcrevem o conteúdo técnico aplicável à temática Drone e à metodologia comum do enunciado~\cite{viel_enunciado}. Foram preservados os valores e a redação, com adaptação apenas de diagramação. Foram omitidos a temática Esteira, as regras administrativas de entrega e o exemplo ilustrativo de tabela, substituído neste relatório pelos resultados efetivamente coletados. A cópia integral do documento original acompanha o projeto em \codigo{fontes/enunciado.pdf}.
+
+\begin{quote}\small
+\textbf{Linguagem e desenvolvimento}
+\begin{itemize}
+\item Deverá ser usada as linguagens C/C++ para o desenvolvimento.
+\item Não será permitido o uso de bibliotecas ou funções prontas e disponibilizadas em base de dados ou em outros meios, salvo situações expressas no trabalho.
+\end{itemize}
+
+\textbf{Temática 1 - Drone}
+
+O contexto dessa temática implementa, em uma ESP32 com FreeRTOS, um autopiloto didático que reproduz o ciclo essencial de um drone: fusão sensorial periódica, controle de atitude, navegação e rotinas de segurança. Para tornar o experimento reprodutível em laboratório, todos os estímulos externos são simulados por sensores touch presente na própria ESP32, mapeados para ``nova amostra inercial'', ``comando de rota/telemetria'' e fail-safe (emergência). Com isso, investigamos como restrições temporais rígidas (hard) e brandas (soft) se comportam sob diferentes políticas de prioridade (Rate Monotonic, Deadline Monotonic e um critério customizado), além das configurações do escalonador.
+
+O foco está na previsibilidade temporal: a tarefa periódica de fusão (T=5 ms) alimenta o controle de atitude com deadline curta, enquanto eventos de navegação/telemetria são assíncronos e o fail-safe exige baixa latência (gerada a partir de uma ISR que ativa task). O desempenho é medido por misses de deadline, jitter e latência ao toque, variando preempção/time slicing, frequência de CPU (80/160/240 MHz) e execução em unicore. O resultado permite discutir trade-offs entre robustez do controle, resposta a emergências e custo de preempções no tempo de execução.
+
+\textbf{Introdução}
+
+O sistema de controle do drone utiliza uma tarefa periódica para manter o estado inercial (fusão de sensores simulada) e tarefas encadeadas para controle de atitude. Eventos de navegação, telemetria e fail-safe são gerados por toques em pads touch. Todo o fluxo é instrumentado para medir latências e verificar deadlines sob diferentes políticas de prioridade e configurações do FreeRTOS.
+
+\textbf{Mapeamento de entradas (touch)}
+\begin{itemize}
+\item Touch B: comando de rota (evento de navegação).
+\item Touch C: solicitação de telemetria/flush.
+\item Touch D: fail-safe/emergência.
+\item Touch A (opcional): injeta perturbação nos sinais para estresse de carga.
+\end{itemize}
+
+\textbf{Tasks}
+\begin{enumerate}
+\item \textbf{FUS\_IMU -- Hard RT (analisar se é hard ou soft) -- Periódica}
+\begin{itemize}
+\item T (período): 5 ms; D: 5 ms; C (WCET): 1,0 ms (deve ser medido)
+\item Ação: filtragem/estimador (complementar/Madgwick) produz estado inercial.
+\item Observação: produz amostra/estado e sinaliza a próxima task (queue/notify).
+\end{itemize}
+\item \textbf{CTRL\_ATT -- Hard RT (analisar se é hard ou soft) -- Encadeada (por FUS\_IMU)}
+\begin{itemize}
+\item Gatilho: notificação/queue da FUS\_IMU.
+\item D: 5 ms após a amostra; C: \textasciitilde0,8 ms (deve ser medido)
+\item Ação: PID e atualização de atuadores (simulados).
+\end{itemize}
+\item \textbf{NAV\_PLAN -- Soft RT (analisar se é hard ou soft) -- Evento (Touch B)}
+\begin{itemize}
+\item D: 20 ms; C: 3--4 ms (deve ser medido)
+\item Ação: atualiza waypoint/rota; se flag de telemetria (Touch C), envia estado.
+\end{itemize}
+\item \textbf{FS\_TASK -- Hard RT -- Evento (Touch D)}
+\begin{itemize}
+\item D: 10 ms desde o toque; C: 0,8--1,0 ms
+\item Ação: pouso/hover seguro; reduz throttle imediatamente.
+\end{itemize}
+\end{enumerate}
+
+\textbf{Metodologia de teste}
+\begin{enumerate}
+\item Prioridades (três políticas):
+\begin{itemize}
+\item (opcional -- pontuação extra de 0,5 à 1,0) RM: menor período (ou maior taxa de eventos esperados) = maior prioridade.
+\item DM: menor deadline = maior prioridade (útil pelas tarefas de segurança).
+\item Custom: Investigar as tarefas mais críticas e atribuir prioridades.
+\end{itemize}
+\item Escalonador (FreeRTOSConfig.h):
+\begin{itemize}
+\item Testar preemptivo vs cooperativo (\codigo{configUSE_PREEMPTION} 1/0).
+\item (opcional) Em preemptivo, ligar/desligar time slicing (\codigo{configUSE_TIME_SLICING} 1/0).
+\item Executar uma bateria curta ($\geq$ 30 s por cenário) com bursts de toques (pressione A/B/C/D em sequências rápidas e/ou ao mesmo tempo).
+\end{itemize}
+\item Hardware (menuconfig):
+\begin{itemize}
+\item Fixar UNICORE (Executar o FreeRTOS somente em um core causa diferença na execução).
+\item Variar frequência de CPU (80/160/240 MHz).
+\item Repetir cenários das políticas/escalonadores para cada frequência com o 80 MHz e 240 MHz.
+\item Extra (de 0,5 à 1,0 ponto): fazer a repetição com 160 MHz.
+\end{itemize}
+\item Critérios de sucesso:
+\begin{itemize}
+\item Todos os deadlines foram atendidos durante vários testes
+\end{itemize}
+\item Coleta e relatório:
+\begin{itemize}
+\item Logar timestamp\_evento, timestamp\_task\_start, timestamp\_task\_end.
+\item Calcular misses, latência da IS ativar a task e ocupação de CPU.
+\item Tabela comparativa por cenário (política $\times$ preempção $\times$ freq.)
+\end{itemize}
+\end{enumerate}
+
+\textbf{Itens importantes}
+\begin{enumerate}
+\item Você(s) deverá(ão) desenvolver o software requisitado pela empresa, seguindo a especificação sobre sensores, controladores e threads.
+\item Deverá ser usado os sensores touch da ESP32, conforme indicado na imagem a seguir, para gerar as interrupções. Observe que os sensores então destacadas em cor roxa e iniciando com TOUCH. Há um total de 10 sensores.
+\item Com o software, vocês deverão fazer uma análise temporal criteriosa do sistema desenvolvido. Poderão usar as bibliotecas indicadas nesse link: General Purpose Timer.
+\item Devem ser identificadas a tasks com requisitos temporais hard e soft, e descrever o que levou a essa análise. Além disso, as operações podem ser consideradas sem requisito temporal (essa escolha deve ser embasada). Lembre-se de atualizar as prioridades de execução das threads do sistema no qual você faz uso.
+\item Você pode simular as operações de código com geração de prints ou padrões de liga/desliga do LED na placa.
+\end{enumerate}
+\end{quote}
+
+\noindent\textit{Nota de transcrição:} a menção à imagem dos pinos remete à figura do PDF original; o mapeamento efetivamente utilizado é apresentado na Tabela~\ref{tab:touch}. A expressão ``latência da IS'' foi mantida conforme o enunciado e é interpretada na implementação como a latência desde a ISR até o início da tarefa.
+
+\FloatBarrier

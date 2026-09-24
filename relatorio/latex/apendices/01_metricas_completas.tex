@@ -1,0 +1,18 @@
+\begin{landscape}
+\section{Métricas completas por tarefa}
+\label{ap:metricas}
+
+\begin{singlespace}\small
+As Tabelas~\ref{tab:metricas_fus}--\ref{tab:metricas_fs} reúnem os 72 resumos finais. E é duração decorrida, R é resposta, L é latência de início e J segue a definição de cada tarefa. Tempos em ms; CPU média ponderada. Deadlines: FUS/CTRL=5~ms, NAV=20~ms e FS=10~ms. Configuração e duração dos IDs: Tabela~\ref{tab:resumo}. As médias temporais preservam a precisão de 0,1~$\mu$s impressa no log.
+\end{singlespace}
+\input{tabelas/metricas_fus}
+\clearpage
+\input{tabelas/metricas_ctrl}
+\clearpage
+\input{tabelas/metricas_nav}
+\clearpage
+\input{tabelas/metricas_fs}
+\end{landscape}
+\noindent A Tabela~\ref{tab:timestamps} preserva os timestamps brutos do último job e a CPU da última janela, distinta da média do ensaio. Os CSV suplementares mantêm todas as 488 linhas de resumo e as diferenças por janela.
+\input{tabelas/timestamps}
+\clearpage

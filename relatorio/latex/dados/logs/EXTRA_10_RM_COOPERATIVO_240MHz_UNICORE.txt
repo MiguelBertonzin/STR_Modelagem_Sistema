@@ -1,0 +1,74 @@
+I (264) main_task: Calling app_main()
+TOUCH | calibrando: mantenha os sensores livres
+TOUCH A | T0 | GPIO4 | base=303 | limite=242
+TOUCH B | T7 | GPIO27 | base=341 | limite=272
+TOUCH C | T4 | GPIO13 | base=293 | limite=234
+TOUCH D | T9 | GPIO32 | base=358 | limite=286
+TOUCH | um evento por contato | debounce=1200 ms | liberacao_estavel=500 ms
+POLITICA | RM | FS=4 | FUS=5 | CTRL=5 | NAV=3
+CONFIG | escalonamento=COOPERATIVO | nucleos=1 | cpu=240 MHz | preemption=0
+METRIC;tempo_s;politica;tarefa;jobs;misses;miss_pct;exec_min_us;exec_avg_us;exec_max_us;resp_min_us;resp_avg_us;resp_max_us;lat_inicio_max_us;jitter_avg_us;jitter_max_us;cpu_pct;evento_us;inicio_us;fim_us
+DRONE | simulacao iniciada | FUS_IMU=5 ms | metricas=5000 ms
+I (342) main_task: Returned from app_main()
+GUIA | 1/14: toque C (GPIO13) por cerca de 1 segundo
+TEL | seq=271 | waypoint=0 | rpy=[5.56, -4.55, 10.84] | motores=[55.1, 55.6, 58.8, 30.5] | fail-safe=OFF | stress_evento=OFF | stress_restante=0 | latencia=1222 us | descartados=0
+GUIA | 2/14: toque B (GPIO27) por cerca de 1 segundo
+NAV | waypoint=1 | ref=[5.0, 0.0, 30.0] | stress_evento=OFF | latencia=408 us
+GUIA | 3/14: toque C (GPIO13) por cerca de 1 segundo
+TEL | seq=597 | waypoint=1 | rpy=[-7.12, -4.93, 23.88] | motores=[67.8, 43.8, 26.6, 61.8] | fail-safe=OFF | stress_evento=OFF | stress_restante=0 | latencia=14 us | descartados=0
+GUIA | 4/14: toque A (GPIO4) para iniciar 10 segundos de estresse
+STRESS | perturbacao e carga extras iniciadas por 10000 ms | restantes=0 amostras | latencia=17 us
+GUIA | 5/14: durante o estresse, toque B (GPIO27)
+METRIC;5.012;RM;FUS_IMU;1001;2;0.200;668;671.5;790;177;305.8;5569;4897;434.2;4897;13.604;5056055;5056083;5056756
+METRIC;5.012;RM;CTRL_ATT;1001;0;0.000;447;450.8;669;1128;1133.0;1414;897;7.5;211;9.281;5056083;5056766;5057213
+METRIC;5.012;RM;NAV_PLAN;3;0;0.000;5;1792.7;5352;19;2340.7;5760;1222;402.7;814;0.317;3037097;3037111;3037116
+METRIC;5.012;RM;FAIL_SAFE;0;0;0.000;0;0.0;0;0;0.0;0;0;0.0;0;0.000;0;0;0
+TOUCH_SEQ;5.012;CBCA;A=1;B=1;C=2;D=0;descartados=0
+NAV | waypoint=2 | ref=[0.0, 5.0, 60.0] | stress_evento=ON | latencia=13 us
+GUIA | 6/14: durante o estresse, toque C (GPIO13)
+METRIC;10.012;RM;FUS_IMU;2001;5;0.250;668;684.0;790;177;316.0;5804;5131;431.9;5131;14.129;10056055;10055776;10056445
+METRIC;10.012;RM;CTRL_ATT;2001;0;0.000;447;450.8;669;1128;1145.5;1414;897;32.1;211;9.295;10055776;10056459;10056911
+METRIC;10.012;RM;NAV_PLAN;4;0;0.000;5;3154.8;7241;19;3569.0;7254;1222;302.2;814;0.111;9694672;9694685;9701926
+METRIC;10.012;RM;FAIL_SAFE;0;0;0.000;0;0.0;0;0;0.0;0;0;0.0;0;0.000;0;0;0
+TOUCH_SEQ;10.012;CBCAB;A=1;B=2;C=2;D=0;descartados=0
+TEL | seq=2617 | waypoint=2 | rpy=[20.88, -19.39, -41.95] | motores=[0.0, 100.0, 0.0, 52.3] | fail-safe=OFF | stress_evento=ON | stress_restante=293 | latencia=13 us | descartados=0
+GUIA | 7/14: sequencia consecutiva, toque B (GPIO27)
+NAV | waypoint=0 | ref=[0.0, 0.0, 0.0] | stress_evento=ON | latencia=13 us
+GUIA | 8/14: sequencia consecutiva, toque C (GPIO13)
+TEL | seq=2914 | waypoint=0 | rpy=[24.10, -17.94, 6.56] | motores=[47.4, 97.6, 58.7, 0.0] | fail-safe=OFF | stress_evento=OFF | stress_restante=0 | latencia=9 us | descartados=0
+GUIA | 9/14: sequencia consecutiva, toque B (GPIO27)
+METRIC;15.012;RM;FUS_IMU;3001;7;0.233;668;687.3;790;177;317.5;5804;5131;431.7;5131;14.076;15056055;15055564;15056232
+METRIC;15.012;RM;CTRL_ATT;3001;0;0.000;446;451.3;1957;1128;1149.4;2651;897;38.4;211;9.296;15055564;15056246;15056698
+METRIC;15.012;RM;NAV_PLAN;7;0;0.000;5;2816.0;7241;15;3057.7;7254;1222;173.3;814;0.270;14623132;14623141;14623147
+METRIC;15.012;RM;FAIL_SAFE;0;0;0.000;0;0.0;0;0;0.0;0;0;0.0;0;0.000;0;0;0
+TOUCH_SEQ;15.012;CBCABCBC;A=1;B=3;C=4;D=0;descartados=0
+NAV | waypoint=1 | ref=[5.0, 0.0, 30.0] | stress_evento=OFF | latencia=26 us
+GUIA | 10/14: sequencia consecutiva, toque C (GPIO13)
+TEL | seq=3270 | waypoint=1 | rpy=[5.47, -4.56, 20.80] | motores=[48.8, 66.2, 38.6, 46.5] | fail-safe=OFF | stress_evento=OFF | stress_restante=0 | latencia=407 us | descartados=0
+GUIA | 11-12/14: toque B (GPIO27) e C (GPIO13) juntos
+NAV | waypoint=2 | ref=[0.0, 5.0, 60.0] | stress_evento=OFF | latencia=35 us
+GUIA | aguardando o C do toque simultaneo B+C
+TEL | seq=3831 | waypoint=2 | rpy=[0.70, -3.47, 43.24] | motores=[49.8, 74.7, 28.7, 46.8] | fail-safe=OFF | stress_evento=OFF | stress_restante=0 | latencia=14 us | descartados=0
+GUIA | 13/14: toque D (GPIO32) para o fail-safe
+METRIC;20.012;RM;FUS_IMU;4001;10;0.250;668;682.7;790;177;313.7;5864;5192;431.8;5192;13.571;20056055;20055564;20056232
+METRIC;20.012;RM;CTRL_ATT;4001;0;0.000;446;451.2;1957;1128;1144.7;2651;897;29.5;211;9.297;20055564;20056242;20056694
+METRIC;20.012;RM;NAV_PLAN;11;0;0.000;5;2766.6;7241;15;2964.3;7254;1222;182.2;814;0.414;19206964;19206978;19206984
+METRIC;20.012;RM;FAIL_SAFE;0;0;0.000;0;0.0;0;0;0.0;0;0;0.0;0;0.000;0;0;0
+TOUCH_SEQ;20.012;CBCABCBCBCBC;A=1;B=5;C=6;D=0;descartados=0
+FAIL-SAFE | motores zerados | modo seguro ativado | latencia_inicio=25 us | resposta=1367 us
+GUIA | 14/14: toque C (GPIO13) para confirmar o estado seguro
+TEL | seq=4371 | waypoint=2 | rpy=[-5.53, 1.22, 64.84] | motores=[0.0, 0.0, 0.0, 0.0] | fail-safe=ON | stress_evento=OFF | stress_restante=0 | latencia=10 us | descartados=0
+GUIA | sequencia concluida em 21.9 s | aguarde uma linha METRIC com tempo_s >= 30 antes de encerrar
+METRIC;25.012;RM;FUS_IMU;5001;12;0.240;668;680.0;790;176;309.4;5864;5192;431.3;5192;13.569;25056055;25055996;25056669
+METRIC;25.012;RM;CTRL_ATT;5001;0;0.000;446;451.1;1957;1128;1141.8;2651;897;24.1;211;9.293;25055996;25056680;25057127
+METRIC;25.012;RM;NAV_PLAN;12;0;0.000;5;2536.5;7241;15;2718.5;7254;1222;167.3;814;0.085;21907331;21907341;21907346
+METRIC;25.012;RM;FAIL_SAFE;1;0;0.000;1342;1342.0;1342;1367;1367.0;1367;25;0.0;0;0.029;20707517;20707542;20708884
+TOUCH_SEQ;25.012;CBCABCBCBCBCDC;A=1;B=5;C=7;D=1;descartados=0
+METRIC;30.012;RM;FUS_IMU;6001;14;0.233;668;678.1;790;176;306.8;5864;5192;431.2;5192;13.564;30056055;30055564;30056232
+METRIC;30.012;RM;CTRL_ATT;6001;0;0.000;446;451.0;1957;1128;1139.7;2651;897;20.3;211;9.289;30055564;30056242;30056694
+METRIC;30.012;RM;NAV_PLAN;12;0;0.000;5;2536.5;7241;15;2718.5;7254;1222;167.3;814;0.000;21907331;21907341;21907346
+METRIC;30.012;RM;FAIL_SAFE;1;0;0.000;1342;1342.0;1342;1367;1367.0;1367;25;0.0;0;0.000;20707517;20707542;20708884
+METRIC;35.012;RM;FUS_IMU;7001;16;0.229;668;676.7;790;175;304.4;5864;5192;430.9;5192;13.563;35056055;35055666;35056334
+METRIC;35.012;RM;CTRL_ATT;7001;0;0.000;446;450.9;1957;1128;1138.3;2651;897;17.7;211;9.288;35055666;35056345;35056796
+METRIC;35.012;RM;NAV_PLAN;12;0;0.000;5;2536.5;7241;15;2718.5;7254;1222;167.3;814;0.000;21907331;21907341;21907346
+METRIC;35.012;RM;FAIL_SAFE;1;0;0.000;1342;1342.0;1342;1367;1367.0;1367;25;0.0;0;0.000;20707517;20707542;20708884

@@ -1,0 +1,10 @@
+\section{Conclusão}
+\label{sec:conclusao}
+
+O autopiloto didático permitiu exercitar uma cadeia periódica de fusão e controle em conjunto com navegação, telemetria e emergência acionadas por touch. A bateria de 18 ensaios cobriu a matriz principal e os extras de RM, 160~MHz e time slicing, mantendo a execução em um núcleo e duração mínima de 30~s.
+
+Os resultados indicam que aumentar a frequência reduziu o custo base e a ocupação aproximada das tarefas. CUSTOM e DM preemptivos a 160 e 240~MHz não registraram perdas nesta bateria. A 80~MHz, NAV perdeu prazos em todas as condições avaliadas, enquanto CUSTOM favoreceu a conclusão de FS e DM protegeu a cadeia com deadline de 5~ms. Essa diferença expressa a escolha entre prioridade por criticidade e por prazo relativo.
+
+Os cenários cooperativos registraram perdas da FUS mesmo a 240~MHz, mostrando que capacidade de processamento, pontos de reescalonamento e referência de liberação precisam ser analisados conjuntamente. RM apresentou comportamento próximo de DM, coerente com suas prioridades implementadas iguais. A variação de slicing forneceu observações adicionais, mas não isolou seu efeito devido ao número reduzido de eventos e à fase manual dos toques.
+
+A análise também delimitou o alcance das medições: máximos de duração com interferência não são WCET garantido, a resposta completa de FS não identifica o instante da ação segura e a referência da FUS afeta seus indicadores. Assim, o trabalho apresenta evidências experimentais de atendimento e descumprimento de prazos, sem demonstrar garantia temporal para qualquer cenário admissível. Esses resultados orientam tanto a escolha da configuração quanto os próximos ajustes de instrumentação e repetição experimental.

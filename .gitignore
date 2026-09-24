@@ -1,0 +1,31 @@
+# Saidas do ESP-IDF
+build/
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components/
+
+# Editores e sistema operacional
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc
+
+# Python
+__pycache__/
+*.pyc
+.venv/

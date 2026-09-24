@@ -1,0 +1,16 @@
+\section{Introdução}
+\label{sec:introducao}
+
+Em um sistema de tempo real, a utilidade de uma resposta depende de seu resultado e do instante em que ela é produzida. Em um autopiloto, a atualização do estado inercial alimenta o controle dos atuadores, enquanto comandos de navegação e eventos de segurança concorrem pelo processador. A prioridade atribuída a cada função e a disponibilidade de CPU influenciam diretamente esse encadeamento.
+
+O presente trabalho desenvolve a temática Drone da Avaliação M1 de Sistemas em Tempo Real~\cite{viel_enunciado}. Implementou-se um autopiloto didático em C para ESP32, utilizando o ESP-IDF v6.1 e o FreeRTOS~\cite{espidf,idf_freertos}. O código disponibilizado pelo professor foi a referência inicial para a divisão em quatro tarefas~\cite{viel_codigo}; a aplicação utilizada nos ensaios foi desenvolvida em \codigo{main.c}, com operações simuladas, sensores touch reais e instrumentação temporal. O exemplo oficial de touch do ESP-IDF e sua documentação fundamentaram a integração do periférico~\cite{idf_touch_example,idf_touch}.
+
+Foram implementados geração de sinais inerciais e filtro complementar, controle PID com quatro comandos de motor simulados, atualização de waypoints, telemetria e modo seguro acionado por interrupção. A carga computacional foi complementada por laços com número fixo de operações. As prioridades foram selecionadas em compilação, permitindo comparar Deadline Monotonic (DM), uma política customizada com prioridade para a segurança e uma adaptação Rate Monotonic (RM).
+
+A avaliação abrange 18 execuções em um núcleo, incluindo as frequências obrigatórias de 80 e 240~MHz, o extra de 160~MHz, os modos preemptivo e cooperativo e dois ensaios preemptivos sem time slicing. O objetivo é comparar perdas de prazo, duração dos trechos, latência, resposta, jitter e ocupação aproximada das tarefas. O processamento posterior em Python gerou tabelas e figuras a partir dos registros preservados, sem modificar as medições.
+
+O documento apresenta os requisitos técnicos, as decisões de implementação, a metodologia de coleta e a discussão dos resultados. As métricas completas e os timestamps finais por tarefa são apresentados nos apêndices. As conclusões distinguem as observações experimentais de uma garantia formal de pior caso.
+
+\section{Enunciado técnico selecionado}
+\label{sec:enunciado}
+% Conteúdo da seção no arquivo seguinte, mantido separado para edição.

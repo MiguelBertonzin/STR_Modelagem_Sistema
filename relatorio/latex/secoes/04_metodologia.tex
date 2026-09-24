@@ -1,0 +1,55 @@
+\section{Metodologia experimental e processamento}
+\label{sec:metodologia}
+
+\subsection{Matriz e protocolo}
+
+Foram analisados oito cenários da matriz principal (CUSTOM/DM, preemptivo/cooperativo e 80/240~MHz), quatro adicionais a 160~MHz, dois DM preemptivos com slicing declarado desligado e quatro RM a 80/240~MHz. Cada combinação tem uma execução, com duração final de 30,000 a 35,015~s e operação em um núcleo confirmada no banner. Os IDs 01--08 identificam a matriz principal; E01--E04 correspondem a 160~MHz, E05--E06 ao slicing OFF e E07--E10 a RM.
+
+O roteiro guiado aceita a sequência
+\begin{center}\small
+\texttt{C B C A B C B C B C B C D C}.
+\end{center}
+São um toque A, cinco B, sete C e um D. Os registros incluem navegação e telemetria durante estresse e uma consulta após a emergência para verificar motores zerados e modo seguro. O contato é liberado entre acionamentos conforme o guia. O procedimento orienta reinicializar a placa antes de cada execução.
+
+A validação dos registros verificou duração mínima, guia concluído, ordem e contagem dos eventos, zero descartes touch reportados, integridade das linhas METRIC e ausência das mensagens de watchdog e falhas de sequência pesquisadas. Foram extraídas 488 linhas, equivalentes a 122 conjuntos de quatro tarefas. Cada execução contém 12 jobs de NAV e um de FS.
+
+O protocolo facilitou a repetição manual, mas não controla a fase exata do toque em relação à fusão. A sequência aceita também não demonstra um limite temporal entre B e C capaz de comprovar simultaneidade física. Essa limitação deve acompanhar a avaliação das rajadas previstas no enunciado.
+
+\subsection{Referências temporais e métricas}
+
+O firmware utiliza \codigo{esp_timer_get_time()}, que fornece uma referência de tempo em microssegundos~\cite{idf_timer}. Para um job $k$, sejam $e_k$, $s_k$ e $f_k$ os instantes de evento, início e fim. As grandezas implementadas são
+\begin{align}
+E_k &= \max(f_k-s_k,0), & R_k &= \max(f_k-e_k,0),\\
+L_k &= \max(s_k-e_k,0), & m_k &= \mathbf{1}(R_k>D).
+\end{align}
+$E$ é duração decorrida do trecho, $R$ é resposta, $L$ é latência de início e $m_k$ indica perda do deadline. $E$ pode conter interferência de outras tarefas; seu máximo observado não é um limite garantido de WCET de CPU.
+
+FUS utiliza como evento uma referência esperada de liberação. CTRL utiliza o timestamp da amostra; NAV e FS usam a leitura feita no callback touch. Para estes últimos, a latência começa na detecção pela ISR, sem incluir o atraso físico anterior do periférico.
+
+O jitter registrado é
+\begin{equation}
+J_k^{\mathrm{FUS}}=|s_k-e_k|,
+\qquad
+J_k^{\mathrm{evento}}=|L_k-L_{k-1}|,
+\end{equation}
+com o primeiro valor das tarefas por evento fixado em zero. São definições diferentes, mantidas nas tabelas e separadas nas figuras. Para FS, com um job, jitter zero não avalia repetibilidade.
+
+\subsection{Agregação, CPU e rastreabilidade}
+
+Jobs, misses, mínimos, médias e máximos são acumulados desde o início. Para as tabelas finais foi selecionado o último resumo completo de cada cenário. As taxas usam
+\begin{equation}
+p_{\mathrm{miss}}=100\,\frac{N_{\mathrm{miss}}}{N_{\mathrm{jobs}}}.
+\end{equation}
+A classe hard agrega FUS, CTRL e FS pela soma de perdas dividida pela soma de jobs. Esse valor é acompanhado da decomposição por tarefa, pois um miss no único FS pode ficar diluído entre milhares de jobs periódicos. NAV reúne os caminhos B e C.
+
+A CPU do firmware deriva da diferença de runtime de cada tarefa entre consultas, dividida pela duração da janela. A média do ensaio foi aproximada por
+\begin{equation}
+\overline{U}_i=\frac{\sum_j U_{i,j}\Delta t_j}{\sum_j\Delta t_j}.
+\end{equation}
+As janelas são obtidas dos instantes impressos. Consultas de runtime sequenciais e arredondamentos limitam a precisão. A soma das quatro tarefas não é CPU total; não se identificou automaticamente o restante como IDLE.
+
+Para a evolução temporal, foram calculadas diferenças dos contadores entre resumos. Os valores acumulados não foram somados entre si. Não se extrapolaram ensaios de 30~s para 35~s; tabelas apresentam duração e denominadores. Os gráficos e as tabelas foram gerados por Python/Matplotlib a partir dos mesmos dados derivados dos logs.
+
+Foram preservados os registros originais, nomes de arquivos, linhas de origem e hashes SHA-256. As linhas de resumo armazenam os timestamps do último job de cada tarefa, não todos os timestamps individuais. Por isso não se calcularam percentis, histogramas de jobs ou intervalos de confiança a partir dessas médias. O material suplementar inclui os CSV completos e os 18 logs, permitindo conferir cada resultado.
+
+\FloatBarrier

@@ -1,0 +1,69 @@
+TRECHOS DO SDK CONSULTADO
+Estado local da análise; não comprova individualmente os binários históricos.
+Somente leitura dos originais.
+
+FONTE: C:\esp\v6.1\esp-idf\components\esp_driver_touch_sens\hw_ver1\touch_version_specific.c
+SHA256: 30cadfca4a1ff5f499012609e1cc103f19570f25dc3dc4f5f09ad47dcc837ec0
+120: {
+121:     // Nothing to do
+122:     // No dedicate touch sensor clock gate or power domain need to operate
+123: }
+124: 
+125: void IRAM_ATTR touch_priv_default_intr_handler(void *arg)
+126: {
+127:     touch_sensor_handle_t sens_handle = (touch_sensor_handle_t)arg;
+128:     bool need_yield = false;
+129:     touch_hw_active_event_data_t data;
+130:     // Only one `on_active` interrupt source, clear directly
+131:     touch_ll_interrupt_clear(TOUCH_LL_INTR_MASK_ALL);
+132:     touch_ll_get_active_channel_mask(&(data.active_mask));
+133:     touch_ll_clear_active_channel_status();
+134:     // Get the activated channels
+135:     if (sens_handle->cbs.on_hw_active) {
+136:         need_yield |= sens_handle->cbs.on_hw_active(sens_handle, &data, sens_handle->user_ctx);
+137:     }
+138: 
+139:     if (need_yield) {
+140:         portYIELD_FROM_ISR();
+141:     }
+142: }
+143: 
+144: static esp_err_t s_touch_convert_to_hal_config(touch_sensor_handle_t sens_handle, const touch_sensor_config_t *sens_cfg, touch_hal_config_t *hal_cfg)
+145: {
+
+FONTE: C:\esp\v6.1\esp-idf\components\freertos\FreeRTOS-Kernel\portable\xtensa\include\freertos\portmacro.h
+SHA256: 7a62b39c80f119d2c06dc7eee4dae4d4b4c68581f832b8b8b052345b5d6d2366
+458: 
+459: extern void _frxt_setup_switch( void );     //Defined in portasm.S
+460: 
+461: #define portYIELD_FROM_ISR_NO_ARG() ({ \
+462:     traceISR_EXIT_TO_SCHEDULER(); \
+463:     _frxt_setup_switch(); \
+464: })
+465: #define portYIELD_FROM_ISR_ARG(xHigherPriorityTaskWoken) ({ \
+466:     if (xHigherPriorityTaskWoken == pdTRUE) { \
+467:         traceISR_EXIT_TO_SCHEDULER(); \
+468:         _frxt_setup_switch(); \
+469:     } \
+470: })
+471: 
+472: /**
+473:  * @note    The macro below could be used when passing a single argument, or without any argument,
+474:  *          it was developed to support both usages of portYIELD inside of an ISR. Any other usage form
+475:  *          might result in undesired behavior
+476:  */
+477: #if defined(__cplusplus) && (__cplusplus >  201703L)
+478: #define portYIELD_FROM_ISR(...) CHOOSE_MACRO_VA_ARG(portYIELD_FROM_ISR_ARG, portYIELD_FROM_ISR_NO_ARG __VA_OPT__(,) __VA_ARGS__)(__VA_ARGS__)
+479: #else
+480: #define portYIELD_FROM_ISR(...) CHOOSE_MACRO_VA_ARG(portYIELD_FROM_ISR_ARG, portYIELD_FROM_ISR_NO_ARG, ##__VA_ARGS__)(__VA_ARGS__)
+481: #endif
+482: 
+483: /* Yielding within an API call (when interrupts are off), means the yield should be delayed
+484:    until interrupts are re-enabled.
+485: 
+486:    To do this, we use the "cross-core" interrupt as a trigger to yield on this core when interrupts are re-enabled.This
+487:    is the same interrupt & code path which is used to trigger a yield between CPUs, although in this case the yield is
+488:    happening on the same CPU.
+489: */
+490: #define portYIELD_WITHIN_API() esp_crosscore_int_send_yield(xPortGetCoreID())
+491: 

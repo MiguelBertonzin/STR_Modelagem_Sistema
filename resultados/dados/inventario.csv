@@ -1,0 +1,19 @@
+﻿cenario;arquivo;sha256;bytes;politica;escalonamento;cpu_mhz;nucleos;slicing_declarado;evidencia_slicing;duracao_s;grupo
+01;01_CUSTOM_PREEMPTIVO_80MHz_UNICORE.txt;7162629e6056293bec2dd3719654f4f2eafcdcdc6c059fee0aba587f5359e54d;6985;CUSTOM;PREEMPTIVO;80;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.0;Principal
+02;02_CUSTOM_PREEMPTIVO_240MHz_UNICORE.txt;a38c06063250e7aa238b1f9922b0225bfff9fe3e0dd36510d3cd2aa9de1ff20b;6841;CUSTOM;PREEMPTIVO;240;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.0;Principal
+03;03_CUSTOM_COOPERATIVO_80MHz_UNICORE.txt;e6b1de57783a417f151f1cf6690bd4ffbbde536725c2a8d5f9ebbb986ee59398;7184;CUSTOM;COOPERATIVO;80;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.015;Principal
+04;04_CUSTOM_COOPERATIVO_240MHz_UNICORE.txt;81df5e8b21a8dced6d3cb62e414185614a7f13017ce59f98fa955da7ad816bd9;6927;CUSTOM;COOPERATIVO;240;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.012;Principal
+05;05_DM_PREEMPTIVO_80MHz_UNICORE.txt;b43e0d23b44f7e86c3ecd6882ba123a23ab19b3952c326b0e873b2073b5b77d8;7010;DM;PREEMPTIVO;80;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.0;Principal
+06;06_DM_PREEMPTIVO_240MHz_UNICORE.txt;ffbb5db0ca2c309b94465ee1c8b25089c92d9101fcb0c5a3056652a7eab23a5d;6840;DM;PREEMPTIVO;240;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.0;Principal
+07;07_DM_COOPERATIVO_80MHz_UNICORE.txt;279bd639da9efe770b56c09024e344e7e579e0256054cb2850fabc3ee542f109;7034;DM;COOPERATIVO;80;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.015;Principal
+08;08_DM_COOPERATIVO_240MHz_UNICORE.txt;d23514e9d8d578bd67f9cd018f2715a712fa9fc3b2a89cac0f155acf1e3e2482;6854;DM;COOPERATIVO;240;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.012;Principal
+E01;EXTRA_01_CUSTOM_PREEMPTIVO_160MHz_UNICORE.txt;7eff2fe6d547cfe289e765192d0a90b693f021ceaa8fcb594c46b271ce5af201;6867;CUSTOM;PREEMPTIVO;160;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.0;160 MHz
+E02;EXTRA_02_CUSTOM_COOPERATIVO_160MHz_UNICORE.txt;1551578e8af681e205f4fedec4df27d33ff62e8e001a3a752bb2557c5d68e94a;7041;CUSTOM;COOPERATIVO;160;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.013;160 MHz
+E03;EXTRA_03_DM_PREEMPTIVO_160MHz_UNICORE.txt;e0a491fcb8b9670ec950437628988bcab6a163bece86682033ed69051673e0d9;7074;DM;PREEMPTIVO;160;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";34.999;160 MHz
+E04;EXTRA_04_DM_COOPERATIVO_160MHz_UNICORE.txt;a31ce6700f0376585aab2b28e71ec1fb66451109903c6a4414ada4a2591e7e4f;6888;DM;COOPERATIVO;160;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.013;160 MHz
+E05;EXTRA_05_DM_PREEMPTIVO_80MHz_UNICORE_SLICING_OFF.txt;e4b5ee8a15b78051eea13f7a76e97d6dde2879351d294c87afd765a64da3b524;7036;DM;PREEMPTIVO;80;1;OFF;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.003;Time slicing
+E06;EXTRA_06_DM_PREEMPTIVO_240MHz_UNICORE_SLICING_OFF.txt;497797f3e61f7502cbbb9c2b7b5f972881f4d65965edafe0697fa1c919ebe042;6335;DM;PREEMPTIVO;240;1;OFF;"histórico da coleta/nome do arquivo; ausente de CONFIG";30.001;Time slicing
+E07;EXTRA_07_RM_PREEMPTIVO_240MHz_UNICORE_SLICING_ON.txt;fb7a40656bac53ee6553670d043eb16f8afbd061ce4941ecf68fea5f76a79fa3;6391;RM;PREEMPTIVO;240;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";30.0;RM
+E08;EXTRA_08_RM_PREEMPTIVO_80MHz_UNICORE_SLICING_ON.txt;d6ff42dc793a6041d191e8f71a362cc1f6196fde1f940f8605464d2a1a5df441;6665;RM;PREEMPTIVO;80;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";30.0;RM
+E09;EXTRA_09_RM_COOPERATIVO_80MHz_UNICORE.txt;cea670f26b2542016ba08586e64247d9184909929fc3e68e38a03d2c9ac8a612;6513;RM;COOPERATIVO;80;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";30.015;RM
+E10;EXTRA_10_RM_COOPERATIVO_240MHz_UNICORE.txt;9737368fb201a7bb6e52cd6a9d98891cd182cb8cfa6ce2b086eeabdb3885df76;6855;RM;COOPERATIVO;240;1;ON;"histórico da coleta/nome do arquivo; ausente de CONFIG";35.012;RM

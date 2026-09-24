@@ -1,0 +1,41 @@
+\section{Limitações e atendimento aos requisitos}
+\label{sec:limitacoes}
+
+\subsection{Consistência da instrumentação}
+
+A auditoria identificou um desalinhamento de referência na FUS: a espera periódica usa ticks, enquanto o instante esperado em microssegundos parte de uma leitura independente. Há snapshots em que o início real precede o evento esperado (Figura~\ref{fig:fase}). No último snapshot do cenário 01, evento, início e fim são 35.042.128, 35.042.024 e 35.044.052~$\mu$s. A duração desse job é 2.028~$\mu$s e a resposta calculada é 1.924~$\mu$s; a diferença decorre de o início anteceder a referência em 104~$\mu$s.
+
+Como L é truncada em zero, não vale necessariamente $R=L+E$ nesse caso. O offset afeta latência, jitter e classificação de jobs próximos do deadline. As tabelas mantêm os resultados reportados. Não é possível corrigir retrospectivamente todos os máximos e misses com os timestamps do último job de cada resumo.
+
+\figura{11_auditoria_fase_fus.pdf}{Auditoria da referência temporal da FUS.}{fig:fase}{Cada ponto representa somente o último job do resumo. Valores negativos indicam início anterior ao evento esperado; nenhuma correção foi aplicada aos dados.}
+
+Outras limitações relevantes são a duração E com interferência, a medição de FS posterior à ação de zerar motores e a agregação dos dois tipos de evento NAV. No caminho C, a medida termina antes do \codigo{printf}; portanto não demonstra o prazo de conclusão da transmissão UART. Nas tarefas por evento, o primeiro jitter é zero e participa do denominador da média.
+
+O modo cooperativo conserva os yields explícitos solicitados pelo caminho de interrupção. A documentação de escalonamento fornece a base conceitual~\cite{barry_freertos}, mas a interpretação concreta depende também do driver consultado~\cite{idf_touch_driver}. Não se presume execução cooperativa pura até o término de cada job.
+
+Por fim, há uma execução por combinação e um evento FS por execução, ausência de controle preciso da fase dos toques e falta de um hash do binário em cada log. A consulta ao código atual auxilia a interpretação, mas não comprova a identidade de todos os binários históricos. Os campos de CPU são aproximados e não constituem perfil completo de ocupação do núcleo.
+
+\subsection{Cobertura do enunciado}
+
+\begin{table}[!htbp]\centering\small
+\caption{Síntese do atendimento técnico ao enunciado.}\label{tab:cobertura}
+\begin{tabularx}{\linewidth}{P{4.2cm}Y}\toprule
+Requisito & Evidência e alcance\\\midrule
+Quatro tarefas em C, touch e ISR & Fusão, PID, rota/telemetria e segurança implementados; sinais inerciais e atuadores simulados.\\
+Modelo hard/soft e prioridades & Classificação justificada; DM e CUSTOM avaliados na matriz principal.\\
+UNICORE, preempção e 80/240 MHz & Oito combinações obrigatórias coletadas; banners confirmam modo, núcleo e frequência.\\
+Ensaios de pelo menos 30 s & Todas as execuções atingiram o mínimo e concluíram o guia. Proximidade/simultaneidade física não quantificada.\\
+Timestamps, perdas, latência e CPU & Instrumentação e 488 linhas METRIC; persistem acumuladores e últimos timestamps por janela.\\
+WCET e jitter & Máximos observados e jitter reportado; ressalvas sobre interferência e fase da FUS.\\
+Todos os deadlines atendidos & Não demonstrado globalmente: há violações registradas e cenários sem perdas.\\
+Extras RM, 160 MHz e slicing & Quatro, quatro e dois ensaios adicionais, respectivamente; resultados e limitações discutidos.\\
+Tabelas, figuras e técnicas & Comparação dos 18 cenários, 12 figuras e métricas completas nos apêndices.\\\bottomrule
+\end{tabularx}
+\par\smallskip{\footnotesize Fonte: confronto entre enunciado, implementação e registros.}
+\end{table}
+
+A conclusão do roteiro confirma a execução da coleta, mas não equivale ao atendimento de todos os deadlines. O critério de sucesso do enunciado exige reconhecer as perdas observadas, inclusive quando a tabela ilustrativa do próprio PDF usa uma conclusão positiva ao lado de percentuais hard diferentes de zero.
+
+Uma nova rodada mais rigorosa deveria alinhar a referência temporal da FUS, registrar o instante da escrita segura, contar sequências consumidas pelo CTRL, distinguir tempo de CPU de duração decorrida e repetir eventos em diferentes fases. Também seria útil imprimir slicing, parâmetros de carga e hash do firmware em cada execução. Esses aprimoramentos não foram aplicados retrospectivamente às coletas deste relatório.
+
+\FloatBarrier

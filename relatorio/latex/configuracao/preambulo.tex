@@ -1,0 +1,46 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=2cm]{geometry}
+\usepackage{graphicx}
+\graphicspath{{imagens/}}
+\usepackage{booktabs,array,longtable,tabularx}
+\usepackage{pdflscape}
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\usepackage{microtype}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf,justification=centering}
+\usepackage{enumitem}
+\setlist{itemsep=2pt,topsep=4pt}
+\usepackage{placeins}
+\usepackage{xcolor}
+\usepackage[numbers,square,sort&compress]{natbib}
+\usepackage{xurl}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{bookmark}
+\usepackage{listings}
+\lstset{language=C,basicstyle=\ttfamily\footnotesize,breaklines=true,
+  frame=single,showstringspaces=false,columns=fullflexible,keepspaces=true}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\codigo}[1]{\path{#1}}
+\newcommand{\fonteautor}{\par\vspace{2pt}{\footnotesize Fonte: elaboração do autor a partir dos registros experimentais.}}
+\newcommand{\figura}[4]{%
+  \begin{figure}[!htbp]\centering
+  \includegraphics[width=\linewidth,height=0.67\textheight,keepaspectratio]{#1}
+  \caption{#2}\label{#3}
+  {\footnotesize #4\par}\fonteautor
+  \end{figure}}
+\setlength{\emergencystretch}{2em}
+\setcounter{topnumber}{3}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.65}
+\renewcommand{\bibsection}{\section*{Referências}}
+\hypersetup{pdftitle={Análise temporal de um autopiloto didático em ESP32 com FreeRTOS},pdfauthor={Miguel Bertonzin}}
