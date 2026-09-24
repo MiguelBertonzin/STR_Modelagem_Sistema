@@ -9,9 +9,3 @@ A configuração padrão versionada usa:
 - flash de 4 MB;
 - política CUSTOM no código principal;
 - estatísticas de tempo de execução habilitadas.
-
-O conjunto experimental contém 18 logs integrais e 488 linhas de métricas. Os 18 hashes SHA-256 registrados em `resultados/dados/inventario.csv` foram comparados com os arquivos publicados e não apresentaram divergências.
-
-O relatório final acompanha o projeto em PDF e também em fontes LaTeX compatíveis com Overleaf. Os dados, tabelas e figuras empregados na análise permanecem disponíveis nas pastas `resultados/` e `relatorio/latex/dados/`.
-
-As alterações de preempção e time slicing usadas na matriz experimental pertencem à configuração do kernel do ESP-IDF instalado. O procedimento de reprodução está documentado em `CONFIGURACAO_EXPERIMENTOS.md`.
