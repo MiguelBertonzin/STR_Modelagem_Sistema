@@ -2,7 +2,7 @@
 
 As coletas foram executadas em **UNICORE**. A matriz obrigatória combina CUSTOM e DM, preemptivo e cooperativo, nas frequências de 80 e 240 MHz. Os extras acrescentam 160 MHz, RM e time slicing desligado.
 
-Antes de cada cenário, altere a configuração, execute `idf.py fullclean`, recompile, grave a placa e reinicie o roteiro.
+execute `idf.py fullclean`, recompile, grave a placa e reinicie o roteiro.
 
 ## Política de prioridade
 
