@@ -49,23 +49,6 @@ O padrão versionado em `sdkconfig.defaults` é **CUSTOM + preemptivo + 240 MHz 
 
 Ao iniciar, mantenha os pads livres durante a calibração. Depois, o terminal apresenta um roteiro de 14 eventos. Cada contato deve ser mantido até o reconhecimento e removido antes do próximo passo.
 
-## Estrutura
-
-```text
-.
-├── main/                       código da aplicação ESP-IDF
-├── docs/                       enunciado e guia de configuração
-├── relatorio/                  PDF final e fontes LaTeX
-├── resultados/
-│   ├── logs/                   18 registros completos dos ensaios
-│   ├── dados/                  tabelas derivadas em CSV
-│   └── graficos/               figuras em PNG e PDF
-├── CMakeLists.txt
-└── sdkconfig.defaults
-```
-
-Arquivos gerados pelo build não são versionados. Os registros experimentais foram mantidos sem correções retrospectivas; as limitações da instrumentação e o alcance das conclusões são discutidos no relatório.
-
 ## Síntese dos resultados
 
 Nas coletas realizadas, CUSTOM e DM preemptivos a 160 e 240 MHz não registraram perdas. A 80 MHz, NAV apresentou perdas em todas as configurações avaliadas. DM e RM preemptivos também registraram atraso na conclusão do job de segurança nessa frequência. Todos os cenários cooperativos apresentaram perdas reportadas da FUS.
