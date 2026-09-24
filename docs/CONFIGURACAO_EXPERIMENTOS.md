@@ -74,8 +74,6 @@ Modo cooperativo:
 
 Depois da alteração, faça `idf.py fullclean` e recompile. O banner deve mostrar `preemption=1`/`PREEMPTIVO` ou `preemption=0`/`COOPERATIVO`.
 
-A configuração cooperativa mantém bloqueios e yields explícitos. O callback touch pode solicitar uma troca na saída da interrupção, portanto o experimento não representa uma execução sem qualquer reescalonamento.
-
 ## Time slicing
 
 O extra foi executado somente em modo preemptivo. No mesmo arquivo:
@@ -85,7 +83,7 @@ O extra foi executado somente em modo preemptivo. No mesmo arquivo:
 #define configUSE_TIME_SLICING 0  // desligado
 ```
 
-Como FUS e CTRL têm a mesma prioridade em DM/RM, o rodízio por tick pode afetar a alternância quando ambas estão prontas. O valor de slicing não foi impresso nos logs antigos; os arquivos `SLICING_OFF` identificam os dois ensaios em que foi desligado.
+Como FUS e CTRL têm a mesma prioridade em DM/RM.
 
 ## Matriz executada
 
