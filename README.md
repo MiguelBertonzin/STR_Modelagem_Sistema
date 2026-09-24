@@ -1,4 +1,4 @@
-# Autopiloto didático em ESP32 com FreeRTOS
+# Drone em ESP32 com FreeRTOS
 
 Trabalho da disciplina **Sistemas em Tempo Real**, desenvolvido para a Avaliação M1 — Modelagem de Sistema, na temática Drone.
 
