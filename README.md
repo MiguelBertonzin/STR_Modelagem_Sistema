@@ -13,7 +13,6 @@ O objetivo experimental é observar deadlines, jitter, latência de ativação e
 
 ## Documentos principais
 
-- [Relatório completo](relatorio/Relatorio_M1_Drone.pdf)
 - [Código principal](main/main.c)
 - [Guia das configurações experimentais](docs/CONFIGURACAO_EXPERIMENTOS.md)
 - [Validação da entrega](docs/VALIDACAO.md)
